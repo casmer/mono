@@ -125,3 +125,4 @@ mono-*.tar.*
 tmpinst-dir.stamp
 msvc/scripts/inputs/
 
+/.project

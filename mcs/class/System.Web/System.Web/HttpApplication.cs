@@ -107,6 +107,7 @@ namespace System.Web
 
 		// The source, and the exposed API (cache).
 		volatile HttpModuleCollection modcoll;
+		private static readonly DynamicModuleRegistry _dynamicModuleRegistry = new DynamicModuleRegistry();
 
 		string assemblyLocation;
 
@@ -209,6 +210,12 @@ namespace System.Web
 					if (context == null)
 						context = HttpContext.Current;
 					HttpModuleCollection coll = modules.LoadModules (this);
+					HttpModuleCollection dynamicModules = CreateDynamicModules();
+					foreach(string key in dynamicModules.AllKeys)
+					{
+						coll.AddModule(key, dynamicModules.Get(key));
+					}
+					System.Diagnostics.Debug.WriteLine("Stuff");
 					Interlocked.CompareExchange (ref modcoll, coll, null);
 					HttpContext.Current = saved;
 
@@ -228,6 +235,29 @@ namespace System.Web
 						context = null;
 				}
 			}
+		}
+
+		// instantiates modules that have been added to the dynamic registry (classic pipeline)
+		private HttpModuleCollection CreateDynamicModules() {
+			HttpModuleCollection moduleCollection = new HttpModuleCollection();
+
+			foreach (DynamicModuleRegistryEntry entry in _dynamicModuleRegistry.LockAndFetchList()) {
+				HttpModuleAction modAction = new HttpModuleAction(entry.Name, entry.Type);
+				moduleCollection.AddModule(modAction.Entry.ModuleName,modAction.Entry.Create());
+			}
+
+			return moduleCollection;
+		}
+
+	
+
+		internal static void RegisterModuleInternal(Type moduleType) {
+			_dynamicModuleRegistry.Add(moduleType);
+		}
+
+		public static void RegisterModule(Type moduleType) {
+					RegisterModuleInternal(moduleType);
+
 		}
 
 		internal bool InApplicationStart {

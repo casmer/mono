@@ -32,6 +32,7 @@
 using System;
 using System.ComponentModel;
 using System.Configuration;
+using System.Web.Configuration.Common;
 
 namespace System.Web.Configuration
 {
@@ -87,6 +88,25 @@ namespace System.Web.Configuration
 		public string Type {
 			get { return (string)base[typeProp]; }
 			set { base[typeProp] = value; }
+		}
+		ModulesEntry _modualEntry=null;
+		private static readonly ConfigurationProperty _propType =
+			new ConfigurationProperty("type", typeof(string), String.Empty, ConfigurationPropertyOptions.IsRequired | ConfigurationPropertyOptions.IsTypeStringTransformationRequired);
+		
+		internal ModulesEntry Entry {
+			get {
+				try {
+					if (_modualEntry == null) {
+						_modualEntry = new ModulesEntry(Name, Type, _propType.Name, this);
+					}
+					return _modualEntry;
+				}
+				catch (Exception ex) {
+					throw new ConfigurationErrorsException(ex.Message,
+						ElementInformation.Properties[_propType.Name].Source, ElementInformation.Properties[_propType.Name].LineNumber);
+				}
+
+			}
 		}
 
 		protected internal override ConfigurationPropertyCollection Properties {

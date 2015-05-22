@@ -47,6 +47,9 @@ static partial class SR
 	{
 		return name;
 	}
+
+	public const string DynamicModuleRegistry_TypeIsNotIHttpModule="Type {0} is not IHttpModule";
+	public const string DynamicModuleRegistry_ModulesAlreadyInitialized="Modules Already Initialized";
 }
 
 namespace System.Runtime.CompilerServices

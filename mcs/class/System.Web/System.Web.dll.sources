@@ -310,6 +310,8 @@ System.Web/BaseParamsCollection.cs
 System.Web/HeadersCollection.cs
 System.Web/HtmlizedException.cs
 System.Web/HttpApplication.cs
+System.Web/DynamicModuleRegistry.cs
+System.Web/ModulesEntry.cs
 System.Web/HttpApplicationFactory.cs
 System.Web/HttpApplicationState.cs
 System.Web/HttpBrowserCapabilities.cs

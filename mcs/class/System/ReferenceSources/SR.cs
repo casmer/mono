@@ -923,4 +923,7 @@ public const string InvalidPathCharsInChecksum = @"The CodeChecksumPragma file n
 public const string InvalidLanguageIdentifier = @"The identifier:""{0}"" on the property:""{1}"" of type:""{2}"" is not a valid language-independent identifier name. Check to see if CodeGenerator.IsValidLanguageIndependentIdentifier allows the identifier name.";
 public const string InvalidTypeName = @"The type name:""{0}"" on the property:""{1}"" of type:""{2}"" is not a valid language-independent type name.";
 public const string InvalidRegion = "The region directive '{0}' contains invalid characters.  RegionText cannot contain any new line characters.";
+
+
+
 }

@@ -504,7 +504,19 @@ namespace System.Web
 			RealProcessRequest (request);
 		}
 
-		
+		internal static Object CreateNonPublicInstance(Type type) {
+			return CreateNonPublicInstance(type, null);
+		}
+
+		[PermissionSet(SecurityAction.Assert, Unrestricted = true)]
+		internal static Object CreateNonPublicInstance(Type type, Object[] args) {
+			return Activator.CreateInstance(
+				type,
+				BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.CreateInstance,
+				null,
+				args,
+				null);
+		}
 		//
 		// Called when we are shutting down or we need to reload an application
 		// that has been modified (touch global.asax) 
