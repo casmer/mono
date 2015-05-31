@@ -78,6 +78,22 @@ namespace System.Web.Routing
 			write_lock = new Lock (this, false);
 		}
 
+
+		public bool AppendTrailingSlash {
+			get;
+			set;
+		}
+
+		public bool LowercaseUrls {
+			get;
+			set;
+		}
+
+		public bool RouteExistingFiles {
+			get;
+			set;
+		}
+
 		//VirtualPathProvider provider;
 		Dictionary<string,RouteBase> d = new Dictionary<string,RouteBase> ();
 
@@ -91,8 +107,6 @@ namespace System.Web.Routing
 				return null;
 			}
 		}
-
-		public bool RouteExistingFiles { get; set; }
 
 		public void Add (string name, RouteBase item)
 		{
@@ -138,6 +152,7 @@ namespace System.Web.Routing
 			return null;
 		}
 
+
 		public VirtualPathData GetVirtualPath (RequestContext requestContext, RouteValueDictionary values)
 		{
 			return GetVirtualPath (requestContext, null, values);
@@ -164,6 +179,7 @@ namespace System.Web.Routing
 
 			if (vp != null) {
 				string appPath = requestContext.HttpContext.Request.ApplicationPath;
+
 				if (appPath != null && (appPath.Length == 0 || !appPath.EndsWith ("/", StringComparison.Ordinal)))
 					appPath += "/";
 				
