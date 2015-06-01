@@ -80,8 +80,11 @@ namespace System.Web.Routing
 
 
 		public bool AppendTrailingSlash {
-			get;
-			set;
+			get {return true;} 
+			set{
+				//do nothing
+			}
+
 		}
 
 		public bool LowercaseUrls {
